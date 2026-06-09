@@ -1,0 +1,15 @@
+[data-theme="dark"] {
+  --bg: #0F0F0F;
+  --surface: #1A1A1A;
+  --text: #F5F5F5;
+  --text-secondary: #8E8E8E;
+  --border: #333333;
+  --shadow: 0 2px 12px rgba(0,0,0,0.4);
+}
+
+[data-theme="dark"] .auth-page { background: var(--bg); }
+[data-theme="dark"] .input-field { background: #2a2a2a; }
+[data-theme="dark"] .notif-item.unread { background: #1f0f14; }
+[data-theme="dark"] .skeleton { background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%); background-size: 200% 100%; }
+[data-theme="dark"] .explore-grid .explore-item-overlay { background: rgba(0,0,0,0.5); }
+[data-theme="dark"] .post-detail-modal { background: var(--surface); }

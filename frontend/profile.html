@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snapora — Profile</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-logo"><span>Snapora</span></div>
+  <div class="sidebar-nav">
+    <a class="nav-item" href="feed.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></a>
+    <a class="nav-item" href="explore.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span>Explore</span></a>
+    <a class="nav-item" href="reels.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg><span>Reels</span></a>
+    <a class="nav-item" href="notifications.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Notifications</span></a>
+    <a class="nav-item active" href="profile.html"><img class="avatar avatar-sm nav-user-avatar" src="" alt=""><span class="nav-username"></span></a>
+  </div>
+  <div class="sidebar-user">
+    <button class="nav-item logout-btn" style="width:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Log out</span></button>
+  </div>
+</nav>
+
+<header class="top-header">
+  <button onclick="history.back()" style="padding:8px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="logo"><span id="header-username"></span></div>
+  <div style="width:40px"></div>
+</header>
+
+<div class="main-content">
+  <div class="content-wrapper">
+    <div class="profile-header">
+      <div style="position:relative">
+        <img class="avatar avatar-xxl" id="profile-avatar" src="" alt="Profile">
+        <label id="avatar-upload-label" class="hidden" style="position:absolute;bottom:4px;right:4px;background:var(--surface);border:1px solid var(--border);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px" title="Change photo">
+          📷<input type="file" id="avatar-file-input" accept="image/*" class="hidden">
+        </label>
+      </div>
+      <div class="profile-info">
+        <div class="profile-username">
+          <span id="profile-username"></span>
+          <button class="btn btn-outline btn-sm hidden" id="edit-profile-btn">Edit Profile</button>
+          <button class="btn btn-sm hidden" id="follow-btn">Follow</button>
+          <button id="dark-mode-toggle" class="btn btn-outline btn-sm">🌙</button>
+        </div>
+        <div class="profile-stats">
+          <div class="profile-stat"><strong id="posts-count">0</strong><span>posts</span></div>
+          <div class="profile-stat"><strong id="followers-count">0</strong><span>followers</span></div>
+          <div class="profile-stat"><strong id="following-count">0</strong><span>following</span></div>
+        </div>
+        <div style="font-weight:600;font-size:14px" id="profile-fullname"></div>
+        <div style="font-size:14px;color:var(--text-secondary);margin-top:4px" id="profile-bio"></div>
+      </div>
+    </div>
+
+    <div class="profile-tabs">
+      <div class="profile-tab active" data-tab="posts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="display:inline-block;vertical-align:middle;margin-right:4px"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        POSTS
+      </div>
+      <div class="profile-tab hidden" data-tab="saved" id="tab-saved">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12" style="display:inline-block;vertical-align:middle;margin-right:4px"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        SAVED
+      </div>
+    </div>
+
+    <div class="profile-grid" id="profile-grid">
+      <div class="skeleton" style="aspect-ratio:1"></div>
+      <div class="skeleton" style="aspect-ratio:1"></div>
+      <div class="skeleton" style="aspect-ratio:1"></div>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a class="bottom-nav-item" href="feed.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></a>
+  <a class="bottom-nav-item" href="explore.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></a>
+  <a class="bottom-nav-item" href="feed.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></a>
+  <a class="bottom-nav-item" href="reels.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></a>
+  <a class="bottom-nav-item active" href="profile.html"><img class="avatar avatar-sm nav-user-avatar" src="" alt=""></a>
+</nav>
+
+<div class="toast"></div>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/api.js"></script>
+<script src="js/components.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Avatar upload
+  document.getElementById('avatar-file-input')?.addEventListener('change', async function() {
+    if (!this.files[0]) return;
+    const fd = new FormData();
+    fd.append('file', this.files[0]);
+    try {
+      const res = await API.postForm('/users/me/avatar', fd);
+      document.getElementById('profile-avatar').src = Components.avatarSrc(res.avatarUrl, res.username);
+      document.querySelectorAll('.nav-user-avatar').forEach(el => el.src = Components.avatarSrc(res.avatarUrl, res.username));
+      const user = Auth.getUser();
+      if (user) { user.avatarUrl = res.avatarUrl; localStorage.setItem('sn_user', JSON.stringify(user)); }
+      showToast('Avatar updated!');
+    } catch (e) { showToast(e.message); }
+  });
+</script>
+</body>
+</html>

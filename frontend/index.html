@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snapora — Login</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/dark-mode.css">
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <!-- Login -->
+    <div id="login-box" class="auth-box">
+      <div class="auth-logo"><span>Snapora</span></div>
+      <form id="login-form">
+        <div class="input-group">
+          <input class="input-field" id="login-identifier" type="text" placeholder="Username or email" required autocomplete="username">
+        </div>
+        <div class="input-group">
+          <input class="input-field" id="login-password" type="password" placeholder="Password" required autocomplete="current-password">
+        </div>
+        <p id="login-error" class="error-msg hidden"></p>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px" id="login-btn">Log In</button>
+      </form>
+      <div class="divider">OR</div>
+      <p style="font-size:12px;color:var(--text-secondary)">Sign up to see photos and videos from your friends.</p>
+    </div>
+    <div class="auth-switch">
+      Don't have an account? <a href="#" id="show-register">Sign up</a>
+    </div>
+
+    <!-- Register -->
+    <div id="register-box" class="auth-box hidden" style="margin-top:10px">
+      <div class="auth-logo"><span>Snapora</span></div>
+      <p style="color:var(--text-secondary);font-size:14px;margin-bottom:20px">Sign up to see photos from your friends.</p>
+      <form id="register-form">
+        <div class="input-group"><input class="input-field" id="reg-email" type="email" placeholder="Email" required></div>
+        <div class="input-group"><input class="input-field" id="reg-fullname" type="text" placeholder="Full Name"></div>
+        <div class="input-group"><input class="input-field" id="reg-username" type="text" placeholder="Username" required minlength="3" maxlength="30"></div>
+        <div class="input-group"><input class="input-field" id="reg-password" type="password" placeholder="Password" required minlength="6"></div>
+        <p id="register-error" class="error-msg hidden"></p>
+        <button type="submit" class="btn btn-primary" style="width:100%;margin-top:8px" id="register-btn">Sign Up</button>
+      </form>
+    </div>
+    <div id="register-switch" class="auth-switch hidden">
+      Have an account? <a href="#" id="show-login">Log in</a>
+    </div>
+  </div>
+</div>
+<div class="toast"></div>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  // Redirect if already logged in
+  if (Auth.isLoggedIn()) window.location.href = '/frontend/feed.html';
+
+  const theme = localStorage.getItem('sn_theme') || 'light';
+  document.documentElement.dataset.theme = theme;
+
+  document.getElementById('show-register').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('login-box').classList.add('hidden');
+    document.getElementById('login-box').nextElementSibling.classList.add('hidden');
+    document.getElementById('register-box').classList.remove('hidden');
+    document.getElementById('register-switch').classList.remove('hidden');
+  });
+
+  document.getElementById('show-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('register-box').classList.add('hidden');
+    document.getElementById('register-switch').classList.add('hidden');
+    document.getElementById('login-box').classList.remove('hidden');
+    document.getElementById('login-box').nextElementSibling.classList.remove('hidden');
+  });
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('login-btn');
+    const err = document.getElementById('login-error');
+    btn.textContent = 'Logging in...'; btn.classList.add('btn-loading'); err.classList.add('hidden');
+    try {
+      await Auth.login(document.getElementById('login-identifier').value, document.getElementById('login-password').value);
+      window.location.href = '/frontend/feed.html';
+    } catch (ex) { err.textContent = ex.message; err.classList.remove('hidden'); }
+    finally { btn.textContent = 'Log In'; btn.classList.remove('btn-loading'); }
+  });
+
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('register-btn');
+    const err = document.getElementById('register-error');
+    btn.textContent = 'Signing up...'; btn.classList.add('btn-loading'); err.classList.add('hidden');
+    try {
+      await Auth.register(
+        document.getElementById('reg-username').value,
+        document.getElementById('reg-email').value,
+        document.getElementById('reg-password').value,
+        document.getElementById('reg-fullname').value
+      );
+      window.location.href = '/frontend/feed.html';
+    } catch (ex) { err.textContent = ex.message; err.classList.remove('hidden'); }
+    finally { btn.textContent = 'Sign Up'; btn.classList.remove('btn-loading'); }
+  });
+</script>
+</body>
+</html>
